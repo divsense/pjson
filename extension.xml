@@ -1,0 +1,52 @@
+<xml>
+  <extension name="pjson" title="JSON" version="1.0">
+
+        <lib name="a" type="sandbox" src="mart::divsense/pjson/producers.js"/>
+
+        <nob name="json" consumer="true">
+
+            <produce lib="a" method="json" default-value=""/>
+
+            <term name="dkey">
+                <match>
+                    <allow>
+                        <parent nob="pjson:json"/>
+                        <parent term="dobject"/>
+                    </allow>
+                    <body highlight="attr-name"/>
+                </match>
+
+                <produce method="dkey" lib="a"/>                
+            </term>
+
+            <term name="darray">
+                <match>
+                    <allow>
+                        <parent term="dkey"/>
+                        <parent term="darray"/>
+                    </allow>
+
+                    <body string="[" highlight-body="tag"/>
+                </match>
+
+                <produce method="darray" lib="a"/>
+
+            </term>
+
+            <term name="dobject">
+                <match>
+                    <allow>
+                        <parent term="dkey"/>
+                        <parent term="darray"/>
+                    </allow>
+
+                    <body string="{" highlight-body="tag"/>
+                </match>
+
+                <produce method="dobject" lib="a"/>
+
+            </term>
+
+        </nob>
+    </extension>
+</xml>
